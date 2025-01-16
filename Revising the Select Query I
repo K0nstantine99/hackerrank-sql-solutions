@@ -1,0 +1,6 @@
+-- SELECTing ALL(*) columns from CITY table WHERE CountryCode is USA and Population is more than a hundred thousand.
+SELECT  *       
+FROM            CITY
+WHERE           CountryCode = 'USA'
+AND             POPULATION > 100000
+;
