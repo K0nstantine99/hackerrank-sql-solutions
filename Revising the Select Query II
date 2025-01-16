@@ -1,0 +1,8 @@
+-- SELECTing NAMEs of cities FROM CITY table WHERE POPULATION is more than a hundred and twenty thousand AND CountryCode is USA.
+
+SELECT
+                NAME
+FROM            CITY
+WHERE           POPULATION > 120000
+AND             CountryCode = 'USA'
+;
