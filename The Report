@@ -1,0 +1,12 @@
+-- Nothing fancy, just simple beginner code here
+SELECT
+            CASE
+            WHEN    g.Grade > 7 THEN s.Name
+            ELSE    'NULL' END AS Name,
+            g.Grade,
+            s.Marks
+FROM    Students s
+JOIN    Grades g ON Marks BETWEEN   Min_Mark AND Max_Mark
+GROUP BY    g.Grade, s.Name, s.Marks
+ORDER BY    g.Grade DESC, s.Name, s.Marks
+;
