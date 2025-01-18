@@ -1,0 +1,12 @@
+--Creating a temporary table: SELECTing LAT_N FROM STATION WHERE LAT_N is bigger than 38.778, also SELECTing LONG_W in this table too
+WITH        smalllatn AS (
+SELECT      LAT_N, LONG_W
+FROM    STATION
+WHERE       LAT_N > 38.778
+)
+--FROM the smalllatn temporary table we created above we SELECT the LON_W with 4 decimal points, choose the minimum LAT_N in WHERE clause
+SELECT
+            CAST(LONG_W AS DECIMAL(10,4))
+FROM    smalllatn
+WHERE       LAT_N = (SELECT MIN(LAT_N) FROM smalllatn)
+;
