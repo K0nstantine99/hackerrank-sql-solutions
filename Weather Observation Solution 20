@@ -1,0 +1,8 @@
+/* EVEN or ODD number of rows is the main issue here. Since we need it to work in both situations
+Luckily median function doesn't exist in the MS SQL Server,
+but we need to find the 50% point of the LAT_N
+*/
+SELECT DISTINCT
+    CAST(PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY LAT_N)
+    OVER () AS DECIMAL(10,4)) AS MEDIAN
+FROM STATION;
