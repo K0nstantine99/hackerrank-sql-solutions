@@ -1,0 +1,59 @@
+/* We create 4 tables WITH,
+each table we add row_number (ordered by name ASC) to be able to join with this column as relation
+then we select those names from 4 tables, and LEFT JOIN. we choose professor table first, because it has longest Names list. and this will add NULL to others automatically when those lists end.
+*/
+
+
+WITH doc as ( 
+SELECT      
+            Name,
+            ROW_NUMBER() OVER (ORDER BY Name) as rn
+FROM        OCCUPATIONS
+WHERE       Occupation LIKE 'Doctor')
+,
+prof as ( 
+SELECT      
+            Name,
+            ROW_NUMBER() OVER (ORDER BY Name) as rn
+FROM        OCCUPATIONS
+WHERE       Occupation LIKE 'Professor')
+,
+sing as ( 
+SELECT      
+            Name,
+            ROW_NUMBER() OVER (ORDER BY Name) as rn
+FROM        OCCUPATIONS
+WHERE       Occupation LIKE 'Singer')
+,
+act as ( 
+SELECT      
+            Name,
+            ROW_NUMBER() OVER (ORDER BY Name) as rn
+FROM        OCCUPATIONS
+WHERE       Occupation LIKE 'Actor')
+
+SELECT      
+            d.Name,
+            p.Name,
+            s.Name,
+            a.Name
+FROM        prof p
+LEFT JOIN   doc d ON    p.rn = d.rn
+LEFT JOIN   sing s ON   p.rn = s.rn
+LEFT JOIN   act a   ON  p.rn = a.rn
+;
+
+
+Alternative below, so that we don't pay attention to which is longer, and can provide a universal answer :
+
+SELECT MAX(CASE WHEN occupation = 'Doctor' THEN name END) AS Doctor, 
+       MAX(CASE WHEN occupation = 'Professor' THEN name END) AS Professor, 
+       MAX(CASE WHEN occupation = 'Singer' THEN name END) AS Singer, 
+       MAX(CASE WHEN occupation = 'Actor' THEN name END) AS Actor 
+FROM ( SELECT name, 
+              occupation, 
+              ROW_NUMBER() OVER (PARTITION BY occupation ORDER BY name) AS row_num 
+      FROM occupations ) AS ranked_occupations 
+GROUP BY row_num 
+ORDER BY row_num;
+            
