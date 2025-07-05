@@ -1,0 +1,11 @@
+/*  to start with it is a very confusing given part of task
+but the solution is very simple
+*/
+
+SELECT TOP 1
+            salary * months, 
+            COUNT(employee_id)
+FROM        Employee
+GROUP BY    salary * months
+ORDER BY    salary * months DESC
+;
