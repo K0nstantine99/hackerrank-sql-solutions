@@ -1,3 +1,37 @@
+/*
+
+Universal answer, so that we dont worry about which column is longer, and the rest are NULL in rows
+FIRST we type the NEW TABLE WITH ROW NUMBERS SORTED BY NAME
+WE add row_number over partition by occupation and ordering them by name as well.
+THEN we write our query FROM that table.
+MAX to group them into columns by each case, since they are already ordered by name.
+we need to GROUP THEM BY ROWS ordered by name
+WE also need to order by these ROWS ordered by name
+this is how when there is no name it will give NULL by default.
+
+*/
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT
+        MAX(CASE WHEN Occupation = 'Doctor' THEN Name END) as Doctor_column,
+        MAX(CASE WHEN Occupation = 'Professor' THEN Name END) as Professor_column,
+        MAX(CASE WHEN Occupation = 'Singer' THEN Name END) as Singer_column,
+        MAX(CASE WHEN Occupation = 'Actor' THEN Name END) as Actor_Column
+
+FROM ( SELECT
+            Name,
+            Occupation,
+            ROW_NUMBER() OVER (PARTITION BY Occupation ORDER BY Name) as rownumberorderedbyname
+FROM        OCCUPATIONS) AS newtablewithrownumberssortedbyname
+GROUP BY rownumberorderedbyname
+ORDER BY rownumberorderedbyname
+;
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 /* We create 4 tables WITH,
 each table we add row_number (ordered by name ASC) to be able to join with this column as relation
 then we select those names from 4 tables, and LEFT JOIN. we choose professor table first, because it has longest Names list. and this will add NULL to others automatically when those lists end.
@@ -42,18 +76,3 @@ LEFT JOIN   doc d ON    p.rn = d.rn
 LEFT JOIN   sing s ON   p.rn = s.rn
 LEFT JOIN   act a   ON  p.rn = a.rn
 ;
-
-
-Alternative below, so that we don't pay attention to which is longer, and can provide a universal answer :
-
-SELECT MAX(CASE WHEN occupation = 'Doctor' THEN name END) AS Doctor, 
-       MAX(CASE WHEN occupation = 'Professor' THEN name END) AS Professor, 
-       MAX(CASE WHEN occupation = 'Singer' THEN name END) AS Singer, 
-       MAX(CASE WHEN occupation = 'Actor' THEN name END) AS Actor 
-FROM ( SELECT name, 
-              occupation, 
-              ROW_NUMBER() OVER (PARTITION BY occupation ORDER BY name) AS row_num 
-      FROM occupations ) AS ranked_occupations 
-GROUP BY row_num 
-ORDER BY row_num;
-            
