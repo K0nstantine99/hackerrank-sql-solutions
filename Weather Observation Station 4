@@ -1,0 +1,6 @@
+/* It works like this */
+
+SELECT
+        COUNT(CITY) - COUNT(DISTINCT CITY)
+FROM    STATION
+;
