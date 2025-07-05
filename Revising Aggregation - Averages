@@ -5,3 +5,6 @@ SELECT
 FROM        CITY
 WHERE       DISTRICT LIKE 'California'
 ;
+
+Expected answer has a float .667
+I cannot get the exact average, i get an integer.  CAST it as FLOAT DID NOT WORK
