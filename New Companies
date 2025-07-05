@@ -1,0 +1,19 @@
+/* we have many tables, but we only need to use, company table and employess table.
+because of dublicates, make sure to count only DISTINCT.
+NOW beucase of string company_code the order won't seem right. the system accepts it as the correct answer. BUT we can do better ORDER BY CAST(SUBSTRING)....
+BUT the system won't accept it. so go back to original answer.
+
+SELECT
+            c.company_code,
+            c.founder,
+            COUNT(DISTINCT e.lead_manager_code),
+            COUNT(DISTINCT e.senior_manager_code),
+            COUNT(DISTINCT e.manager_code),
+            COUNT(DISTINCT e.employee_code)
+FROM        Company c
+LEFT JOIN   Employee e ON e.company_code = c.company_code
+GROUP BY    c.company_code, c.founder
+ORDER BY    c.company_code ASC
+                  ;
+
+ORDER BY CAST(SUBSTRING(c.company_code, 2, LEN(c.company_code)) AS INT)
