@@ -1,0 +1,14 @@
+/* 2 tables connect on ci.countrycode = co.code
+population must be taken from city table dont forget. otherwise code doesnt work.
+*/
+
+--------------------------------------------------------------------------
+
+SELECT
+            ci.NAME
+FROM        CITY ci
+LEFT JOIN   COUNTRY co ON ci.COUNTRYCODE = co.CODE
+WHERE       CONTINENT LIKE 'Africa'
+;
+
+--------------------------------------------------------------------------
