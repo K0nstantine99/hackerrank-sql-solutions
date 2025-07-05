@@ -1,0 +1,7 @@
+
+
+SELECT
+            COUNT(DISTINCT NAME)
+FROM        CITY
+WHERE       POPULATION > 100000
+;
