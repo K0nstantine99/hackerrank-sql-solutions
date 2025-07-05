@@ -1,0 +1,19 @@
+/* It is a little complicated to understand the question first.
+we can SELECT ALL* first to see what is there.
+AS I understand P is the parent node of N. WE have 3 cases to check
+1. So if P value of N is NULL it means THEN it is a ROOT node. Then we can give the second CHECK
+2. So if N exists in P (CASE WHEN N IN (SELECT P FROM BST) THEN it is an inner Node because it is a parent to some node)
+3. If neither of the first two checks worked, it means the leftover NODES are not root, and are NOT Parent node to anyone else. ELSE "LEAF" END - meaning they must be leaf node.
+We order by N because it is asked from us in the TASK. dont miss that.
+
+
+SELECT
+            N,
+            CASE
+            WHEN    P IS NULL THEN 'Root'
+            WHEN    N IN (SELECT P FROM BST) THEN "Inner"
+            ELSE "Leaf"
+                END as BST_Type
+FROM    BST
+ORDER BY N
+;
