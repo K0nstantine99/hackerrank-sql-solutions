@@ -1,4 +1,4 @@
---confusing task, but here it is, i dont even know how to explain, just do what is asked step by step.
+-- ordering by right 3 characters and then ordering by ID.
 
 SELECT
             Name
