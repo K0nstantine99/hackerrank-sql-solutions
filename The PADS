@@ -1,0 +1,21 @@
+/*  
+a lot of givens. easy to make a mistake.
+first query is easy, don't forget to order by name.
+Second query has Count(Occupation) which is INTEGER(INT), we cast it to string (VARCHAR)
+ALSO dont forget to make the occupation a lowercase (LOWER)
+When you have COUNT, you need to group them by the thing you are counting. 
+LASTLY, DONT forget to order them by COUNT AND Alphabetical order of Occupation, in case same number of occupations exist.
+*/
+
+
+SELECT
+            Name + '(' + LEFT(Occupation,1) + ')'
+FROM OCCUPATIONS
+ORDER BY    Name ASC
+;
+
+SELECT
+            'There are a total of ' + CAST(COUNT(Occupation) AS VARCHAR) + ' ' + LOWER(Occupation) + 's.' AS sentence
+FROM        OCCUPATIONS
+GROUP BY    Occupation
+ORDER BY    COUNT(Occupation) ASC, Occupation;
