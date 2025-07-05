@@ -1,0 +1,21 @@
+
+-- A lot of trial and error, but LEARNED that CASE checks one by one. if it doesnt work for the 1st check, then goes to next.
+-- So have to type in checks in correct order. if it is not equilateral, then we check if it is isosceles and a triangle.
+-- if it is neither, then we say it must be a SCALENE (no sides equal), WHILE also considering it indeed is a triangle (A+B>C)
+-- if it passes none of these checks, then it is 'Not A Triangle' meaning we check (A+B>C) in previous line. no need to make another check here.
+/*
+2 sides equal means isosceles triangle
+3 sides equal means equilateral triangle
+no sides equal means scalene triangle
+if two sides shorter than 1 side NOT a Triangle
+*/
+
+SELECT  
+        CASE
+        WHEN    A = B AND B = C THEN 'Equilateral'
+        WHEN    (A = B OR A = C OR B = C) AND (A + B > C) THEN 'Isosceles'
+        WHEN    A + B > C THEN 'Scalene'
+        ELSE 'Not A Triangle' END AS Triangle
+       -- A,B,C
+FROM    TRIANGLES
+;
