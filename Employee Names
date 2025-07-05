@@ -1,0 +1,7 @@
+-- ASC or DESC does NOT work in SELECT. it should be in ORDER BY.
+
+SELECT
+            name
+FROM        Employee
+ORDER BY    name ASC
+;
