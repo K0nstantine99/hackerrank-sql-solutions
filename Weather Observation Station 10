@@ -1,0 +1,11 @@
+-- Learned how it doesnt end with something works only with AND also
+
+SELECT
+            DISTINCT CITY
+FROM        STATION
+WHERE       CITY NOT LIKE '%a' AND
+            CITY NOT LIKE '%e' AND
+            CITY NOT LIKE '%i' AND
+            CITY NOT LIKE '%o' AND
+            CITY NOT LIKE '%u'
+;
