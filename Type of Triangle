@@ -16,6 +16,6 @@ SELECT
         WHEN    (A = B OR A = C OR B = C) AND (A + B > C) THEN 'Isosceles'
         WHEN    A + B > C THEN 'Scalene'
         ELSE 'Not A Triangle' END AS Triangle
-       -- A,B,C
+       -- A,B,C for manually(visually) checking if the code works, then we make it text after.
 FROM    TRIANGLES
 ;
