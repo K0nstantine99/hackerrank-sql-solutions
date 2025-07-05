@@ -1,4 +1,4 @@
--- ordering by right 3 characters and then ordering by ID.
+-- ordering by right 3 characters and then ordering by ID. by default any order is ASCENDING, you can change to DESC.
 
 SELECT
             Name
