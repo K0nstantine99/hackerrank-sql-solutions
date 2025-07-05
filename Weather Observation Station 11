@@ -1,0 +1,17 @@
+--AGAIN grouping but this time          WHERE (AND AND AND AND) OR (AND AND AND AND)
+
+SELECT
+            DISTINCT CITY
+FROM        STATION
+WHERE       (CITY NOT LIKE '%a' AND
+            CITY NOT LIKE '%e' AND
+            CITY NOT LIKE '%i' AND
+            CITY NOT LIKE '%o' AND
+            CITY NOT LIKE '%u')
+OR
+            (CITY NOT LIKE 'a%' AND
+            CITY NOT LIKE 'e%' AND
+            CITY NOT LIKE 'i%' AND
+            CITY NOT LIKE 'o%' AND
+            CITY NOT LIKE 'u%')
+;
