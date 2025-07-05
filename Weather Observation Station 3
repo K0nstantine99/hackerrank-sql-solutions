@@ -1,0 +1,7 @@
+/* First Try probably somthing to learn here that I got lucky with. */
+
+SELECT
+            DISTINCT CITY
+FROM        STATION
+WHERE       ID % 2 = 0
+;
