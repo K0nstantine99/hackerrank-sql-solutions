@@ -1,0 +1,18 @@
+/*
+
+1. First we REPLACE(Salary,'0','') zero with nothing.
+2. Then we CAST it as DECIMAL(10,3)
+3. Then we AVG that value. we will see her miscalculation.
+4. Then we CAST(Salary AS DECIMAL(10,3)) and AVG that.
+5. then we will have difference between two.
+6. But the task wants us to round it to nearest integer.
+7. We take it all and Round(,0) them. This does nothing. EVEN if it is correct answer.
+8. We round it UP to nearest integer. WHICH WE DO BY USING CEILING(everything)
+9. now we have the correct answer 2253
+
+*/
+
+SELECT
+            CEILING(AVG(CAST(SALARY AS DECIMAL(10,3))) - AVG(CAST(REPLACE(Salary,'0','') AS DECIMAL(10,3))))
+FROM        EMPLOYEES
+;
