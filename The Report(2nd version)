@@ -1,0 +1,46 @@
+/*
+There is a short way to do this but we can go the long way as well both works.
+
+The ORDER BY clause works one by one, once student names are NULL, they are not affected by name ASC, so it is okay to add 3rd ORDER BY clause Marks ASC.
+
+SHORT version has only one case. since the tables have joined ON BETWEEN ..... AND ...... all the columns fit automatically.
+*/
+
+----------------------------------------------------------------------- LONG VERSION ----------------------------------------------------
+
+SELECT
+            CASE 
+                    WHEN Marks > 89 AND Marks < 101 THEN Name
+                    WHEN Marks > 79 AND Marks < 90 THEN Name
+                    WHEN Marks > 69 AND Marks < 80 THEN Name
+                ELSE NULL   END as stu_name,
+            CASE
+                    WHEN Marks > 89 AND Marks < 101 THEN 10
+                    WHEN Marks > 79 AND Marks < 90 THEN 9
+                    WHEN Marks > 69 AND Marks < 80 THEN 8
+                    WHEN Marks > 59 AND Marks < 70 THEN 7
+                    WHEN Marks > 49 AND Marks < 60 THEN 6
+                    WHEN Marks > 39 AND Marks < 50 THEN 5
+                    WHEN Marks > 29 AND Marks < 40 THEN 4
+                    WHEN Marks > 19 AND Marks < 30 THEN 3
+                    WHEN Marks > 09 AND Marks < 20 THEN 2
+                    WHEN Marks > 0 AND Marks < 10 THEN 1
+                    END AS stu_grade,
+            Marks
+FROM        Students
+ORDER BY    stu_grade DESC, Name ASC, Marks ASC
+;
+
+----------------------------------------------------------------------- SHORT VERSION ----------------------------------------------------
+
+SELECT
+            CASE
+                    WHEN Grade > 7 THEN Name ELSE NULL END as stu_names,
+            Grade,
+            Marks
+FROM        Students s
+JOIN        Grades g ON s.marks BETWEEN g.Min_Mark AND g.Max_Mark
+ORDER BY    Grade DESC, Name ASC, Marks ASC
+;
+
+------------------------------------------------------------------------------------------------------------------------------------------
