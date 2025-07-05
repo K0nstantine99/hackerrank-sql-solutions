@@ -1,0 +1,16 @@
+/* if you LEFT JOIN something goes wrong and thre is a NULL CONTINENT.
+just normal JOIN. there shouldnt be any floats. number should be integer anyways. ROUNDING DOWN with FLOOR is NOT necessary.
+dont forget population is in two tables. we need city population average.
+*/
+
+-------------------------------------------------------------------------------------
+
+SELECT
+            CONTINENT,
+            FLOOR(AVG(ci.POPULATION))
+FROM        CITY ci
+JOIN   COUNTRY co ON co.CODE = ci.COUNTRYCODE
+GROUP BY    CONTINENT
+;
+
+-------------------------------------------------------------------------------------
