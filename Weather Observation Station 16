@@ -1,0 +1,25 @@
+-- Two ways to go: one simple one longer
+
+SELECT      TOP 1
+            CAST(LONG_W AS DECIMAL(10,4))
+FROM        STATION
+WHERE       LAT_N < 137.2345
+ORDER BY    LAT_N DESC
+;
+
+
+-------------ALTERNATIVE------------------
+
+
+WITH    maxlatn as 
+(
+SELECT  MAX(LAT_N) AS lattn
+FROM    STATION
+WHERE   LAT_N < 137.2345
+)
+
+SELECT  
+            CAST(LONG_W AS DECIMAL(10,4))
+FROM        STATION s
+JOIN        maxlatn ml ON ml.lattn = s.LAT_N
+;
