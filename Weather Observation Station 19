@@ -1,3 +1,4 @@
+---------------------------------------------------- CORRECT VERSION --------------------------------------------
 /*
 a = MIN(LAT_N)
 b = MAX(LAT_N)
@@ -7,6 +8,19 @@ Euclidean Distance is distance between two points in a graph: A(x1,y1) and B(x2,
 Formula: square root of ((x1-x2)(x1-x2) + (y1-y2)(y1-y2))
 */
 SELECT
-CAST(SQRT(SQUARE(MAX(LAT_N) - MIN(LAT_N)) + SQUARE(MAX(LONG_W) - MIN(LONG_W))) AS DECIMAL(10,4))
+        CAST(SQRT(SQUARE(MAX(LAT_N) - MIN(LAT_N)) + SQUARE(MAX(LONG_W) - MIN(LONG_W))) AS DECIMAL(10,4))
+FROM    STATION
+;
+
+
+----------------------------------------------------SAME THING ALSO --------------------------------------------
+
+
+-- squareroot of (squared(b-a) + squared(d-c))
+-- b = max(LAT_N)        a = MIN(LAT_N)
+--  d = MAX(LONG_W)       c = MIN(LONG_W)
+
+SELECT
+        CAST(SQRT(SQUARE(MAX(LAT_N) - MIN(LAT_N)) + SQUARE((MAX(LONG_W) - MIN(LONG_W)))) AS DECIMAL (10,4))
 FROM    STATION
 ;
