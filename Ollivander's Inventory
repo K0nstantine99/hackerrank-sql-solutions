@@ -1,0 +1,32 @@
+/*
+  we have two tables. we do not join them. We create a temporary table to fix some things, then we join that one with the next.
+in temptable, WE add ROW_numbers if something has same code and same power, they are ordered by cheapest option. we can also sort them by largest power, and code asc order.
+then we add all the columns from Wands table. now every same code and power wand is ordered in row, cheapest coming first.
+
+Now we select what we are asked to from the first table + age FROM Wands_Property table. We JOIN TEMPTABLE on code.
+WHERE we choose non-evil wands. and the first and cheapest option as rownumber = 1
+ORDERING BY power DESC and age DESC as we are asked in the task.
+*/
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+WITH temptable AS (
+SELECT
+        ROW_NUMBER() OVER (Partition BY code, power ORDER BY coins_needed ASC, power DESC, CODE ASC) as rownumbers,
+        id,
+        code,
+        coins_needed,
+        power
+FROM    Wands
+        )
+        
+SELECT
+        id,
+        age,
+        coins_needed,
+        power
+FROM    Wands_Property wp
+JOIN    temptable tt ON    tt.code = wp.code
+WHERE   wp.is_evil = 0
+AND     tt.rownumbers = 1
+ORDER BY    tt.power DESC, wp.age DESC
+;
