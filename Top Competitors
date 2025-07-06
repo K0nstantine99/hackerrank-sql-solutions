@@ -1,0 +1,28 @@
+/* very confusing task, but the solution is basic and simple.
+We start with the biggest table, then join them in order from bigger to smaller.
+Starting with Submissions, then we join challenges, then we join Difficulty, but when we join difficulty WE also CONNECT Submission.Scores with Difficulty.Scores
+LASTLY we join Hackers table.
+
+IN SELECT we only need Hackers.id and Hackers.Name from Hackers Table.
+
+Because all the tables are connected already, we GROUP the output BY hacker_id and Hackers.name
+
+HAVING    COUNT(scores) >1 more than 1. because it is also a given.
+We do not need to count scores in SELECT because they are already grouped in the tables we JOINED.
+
+We ORDER BY the COUNT(s.scores) DESC, that is all we need to do.  */
+
+
+SELECT
+            h.hacker_id,
+            h.name
+FROM        Submissions s
+JOIN    Challenges c    ON  s.challenge_id = c.challenge_id
+JOIN    Difficulty d    ON  c.difficulty_level = d.difficulty_level
+                        AND s.score = d.score
+JOIN    Hackers h       ON  h.hacker_id = s.hacker_id
+GROUP BY    h.hacker_id, h.name
+HAVING      COUNT(s.score) > 1
+ORDER BY    COUNT(s.score) DESC, h.hacker_id
+;
+                        
