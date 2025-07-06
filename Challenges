@@ -1,0 +1,81 @@
+-- Not really understanding what it is but here is the simplest answer i found
+
+-----------------------------------------------------------------------------------------------------------------------------------
+WITH    temptable AS(
+    SELECT  
+            h.hacker_id,
+            h.name,
+            COUNT(DISTINCT c.challenge_id) AS cnt
+    FROM    Hackers h
+    JOIN    Challenges c ON h.hacker_id = c.hacker_id
+    GROUP BY h.hacker_id, h.name ),     
+filter AS(
+    SELECT
+            hacker_id,
+            COUNT(*) OVER (PARTITION BY cnt) AS cnt_cl
+    FROM temptable )
+SELECT 
+        tt.hacker_id,
+        tt.name,
+        tt.cnt
+FROM    temptable tt
+JOIN    filter f ON tt.hacker_id = f.hacker_id
+WHERE   f.cnt_cl = 1 OR
+        (f.cnt_cl > 1 AND tt.cnt = (SELECT MAX(cnt) FROM temptable))
+ORDER BY tt.cnt DESC, tt.hacker_id ;
+---------------------------------------------------------------- CHAT GPT -------------------------------------------------------
+WITH ChallengeCounts AS (
+    SELECT h.hacker_id, h.name, COUNT(c.challenge_id) AS challenge_count
+    FROM Hackers h
+    JOIN Challenges c ON h.hacker_id = c.hacker_id
+    GROUP BY h.hacker_id, h.name ),
+Freq AS (
+    SELECT challenge_count, COUNT(*) AS freq
+    FROM ChallengeCounts
+    GROUP BY challenge_count ),
+MaxCount AS (
+    SELECT MAX(challenge_count) AS max_count FROM ChallengeCounts )
+SELECT cc.hacker_id, cc.name, cc.challenge_count
+FROM ChallengeCounts cc
+JOIN Freq f ON cc.challenge_count = f.challenge_count
+JOIN MaxCount m ON 1=1
+WHERE f.freq = 1 OR cc.challenge_count = m.max_count
+ORDER BY cc.challenge_count DESC, cc.hacker_id;
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+WITH newtable AS (
+    SELECT
+        h.hacker_id,
+        h.name,
+        COUNT(c.challenge_id) AS num_challenges
+        
+FROM Hackers h
+JOIN Challenges c ON h.hacker_id = c.hacker_id
+
+GROUP BY h.hacker_id, h.name
+--ORDER BY COUNT(challenge_id) DESC,h.hacker_id
+)
+, sectable AS (
+SELECT
+        num_challenges,
+        COUNT(num_challenges) AS count_challenges
+FROM newtable
+GROUP BY num_challenges
+--ORDER BY COUNT(num_challenges) DESC
+    )
+
+SELECT
+        nt.hacker_id,
+        nt.name,
+        nt.num_challenges
+        --st.count_challenges
+FROM newtable nt
+JOIN sectable st ON st.num_challenges = nt.num_challenges
+WHERE
+        st.count_challenges <=1
+OR
+        nt.num_challenges = (SELECT MAX(num_challenges) FROM newtable)
+ORDER BY nt.num_challenges DESC, hacker_id 
+;
