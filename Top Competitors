@@ -12,14 +12,14 @@ We do not need to count scores in SELECT because they are already grouped in the
 
 We ORDER BY the COUNT(s.scores) DESC, that is all we need to do.  */
 
+---------------------------------------------------------------------------------------------------------------------
 
 SELECT
             h.hacker_id,
             h.name
 FROM        Submissions s
 JOIN    Challenges c    ON  s.challenge_id = c.challenge_id
-JOIN    Difficulty d    ON  c.difficulty_level = d.difficulty_level
-                        AND s.score = d.score
+JOIN    Difficulty d    ON  c.difficulty_level = d.difficulty_level AND s.score = d.score
 JOIN    Hackers h       ON  h.hacker_id = s.hacker_id
 GROUP BY    h.hacker_id, h.name
 HAVING      COUNT(s.score) > 1
