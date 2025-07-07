@@ -1,5 +1,17 @@
 -- Not exactly sure how it workds, just putting down Conditions and JOINING temptables.
 
+---------------------------------------------------- ALTERNATIVE ------------------------------------------------------
+SELECT  
+                f1.X,
+                f1.Y
+FROM            Functions f1
+JOIN            Functions f2 ON f1.X = f2.y AND f1.Y = f2.X
+WHERE           f1.X  <= f1.Y
+GROUP BY        f1.x, f1.y
+HAVING f1.x != f1.y or COUNT(*) >1
+ORDER BY f1.x
+
+------------------------------------------------------------------ LONGER DONT UNDERSTAND --------------------------------------------------------
 with temptable AS(
 SELECT
         x,
@@ -18,3 +30,4 @@ AND t1.y = t2.x AND t1.roworder <> t2.roworder
 WHERE   t1.x <= t1.y
 ORDER BY    t1.x, t1.y
 ;
+
