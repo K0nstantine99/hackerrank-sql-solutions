@@ -1,0 +1,20 @@
+-- Not exactly sure how it workds, just putting down Conditions and JOINING temptables.
+
+with temptable AS(
+SELECT
+        x,
+        y,
+        ROW_NUMBER () OVER (ORDER BY x,y) AS roworder
+FROM    Functions
+)
+
+SELECT
+        DISTINCT t1.x,
+        t1.y
+FROM    temptable t1
+JOIN    temptable t2 
+ON t1.x = t2.y
+AND t1.y = t2.x AND t1.roworder <> t2.roworder
+WHERE   t1.x <= t1.y
+ORDER BY    t1.x, t1.y
+;
