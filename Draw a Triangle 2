@@ -1,0 +1,13 @@
+
+--SET counter start from 1..and continue till <21. let it begin to Replicate'*' @counter times. We set each line at +1 and END there
+
+
+DECLARE @counter int;
+
+SET @counter = 1;
+
+WHILE (@counter < 21)
+BEGIN;
+PRINT( REPLICATE('* ', @counter))
+SET @counter = @counter + 1
+END;
