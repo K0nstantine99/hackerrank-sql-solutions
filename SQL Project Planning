@@ -1,0 +1,20 @@
+--JUST do this.
+
+WITH    startd AS(
+SELECT
+            Start_Date,
+            RANK() OVER (ORDER BY Start_Date) AS ranks1
+FROM        Projects
+WHERE       Start_Date NOT IN (SELECT   End_Date FROM   Projects)
+    ),
+        endd AS(
+SELECT      End_Date,
+            RANK() OVER (ORDER BY   End_Date) AS ranks2
+FROM        Projects
+WHERE       End_Date NOT IN (SELECT     Start_Date  FROM    Projects)
+        )
+
+SELECT Start_Date, End_Date
+FROM    startd, endd
+WHERE   ranks1 = ranks2
+ORDER BY    DATEDIFF(day,Start_Date,End_Date),Start_Date;
