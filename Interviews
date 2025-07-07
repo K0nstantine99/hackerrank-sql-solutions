@@ -1,0 +1,37 @@
+WITH newtable AS (
+    SELECT
+            coll.contest_id,
+            SUM(ss.total_submissions) AS sumts,
+            SUM(ss.total_accepted_submissions) AS sumtas
+FROM        Colleges coll
+INNER JOIN  Challenges chall ON chall.college_id = coll.college_id
+INNER JOIN Submission_Stats ss ON chall.challenge_id = ss.challenge_id
+GROUP BY coll.contest_id
+),
+anotherone AS (
+    SELECT  
+            coll.contest_id,
+            SUM(vs.total_views) AS sumtv,
+            SUM(vs.total_unique_views) AS sumtuv
+FROM        Colleges coll
+INNER JOIN  Challenges chall ON chall.college_id = coll.college_id
+INNER JOIN View_Stats vs ON chall.challenge_id = vs.challenge_id
+GROUP BY    coll.contest_id
+)
+SELECT
+            cont.contest_id,
+            cont.hacker_id,
+            cont.name,
+            nt.sumts,
+            nt.sumtas,
+            ao.sumtv,
+            ao.sumtuv
+FROM        Contests cont
+INNER JOIN  newtable nt ON nt.contest_id = cont.contest_id
+INNER JOIN  anotherone ao ON ao.contest_id = cont.contest_id
+WHERE       nt.sumts > 0 OR
+            nt.sumtas > 0 OR
+            ao.sumtv > 0 OR
+            ao.sumtuv > 0
+ORDER BY    contest_id
+;
