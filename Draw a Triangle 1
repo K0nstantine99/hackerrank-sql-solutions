@@ -1,0 +1,11 @@
+-- we declare a counter integer type semicolon; everyline. We set limit to 20 and bottom limit is >0 ...Begin replicate '*', with @counter. We set the replication order -1 and END there...
+
+DECLARE @counter int;
+
+SET @counter = 20;
+
+WHILE (@counter > 0)
+BEGIN;
+PRINT( REPLICATE('* ', @counter))
+SET @counter = @counter - 1
+END;
