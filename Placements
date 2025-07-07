@@ -1,0 +1,17 @@
+/* There is a long way and short way to do this.
+1. WE JOIN Students to Friends. 
+2. WE JOIN Students to Packages for Student salary.
+3. We JOIN FRIENDS to Packages2 for Friends Salary
+4. WHERE condition friend salary > Student salary
+5. ORDER BY  friend salary ASCENDING
+------------------------------------------------------------------------ SHORT ANSWER ----------------------------------------------------------------------
+
+SELECT
+            Name
+FROM        Students s 
+JOIN        Friends  f ON s.ID = f.ID
+JOIN        Packages p ON f.ID = p.ID
+JOIN        Packages fp ON fp.ID = f.Friend_ID
+WHERE       fp.Salary > p.Salary
+ORDER BY    fp.Salary
+;
